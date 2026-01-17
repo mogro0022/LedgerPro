@@ -34,7 +34,7 @@ LedgerPro is a secure, responsive financial management application designed for 
 ```powershell
 cd ledger_api
 python -m venv venv
-.env\Scripts\activate
+.\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -121,7 +121,7 @@ Run these in two separate terminals.
 *Windows:*
 ```powershell
 cd ledger_api
-.env\Scripts\activate
+.\venv\Scripts\activate
 alembic upgrade head   # <--- Run migrations first!
 uvicorn main:app --reload --port 8000
 ```
