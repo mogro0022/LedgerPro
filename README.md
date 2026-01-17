@@ -2,7 +2,7 @@
 
 LedgerPro is a secure, responsive financial management application designed for small businesses. It features a modern React frontend and a high-performance FastAPI backend.
 
-**Key Feature:** This application supports **Dual Database Mode**. You can switch between a local SQLite file (for offline development) and Azure SQL (for production) simply by changing one line of configuration.
+**Key Feature:** This application supports **Dual Database Mode** (SQLite / Azure SQL) and uses **Alembic** for robust database version control.
 
 ## 🚀 Tech Stack
 
@@ -15,6 +15,7 @@ LedgerPro is a secure, responsive financial management application designed for 
 * **API:** Python FastAPI
 * **Database:** SQLite (Local) OR Azure SQL (Cloud)
 * **ORM:** SQLAlchemy
+* **Migrations:** Alembic
 * **Auth:** JWT + Argon2
 
 ---
@@ -25,6 +26,7 @@ LedgerPro is a secure, responsive financial management application designed for 
 * [Python 3.10+](https://www.python.org/)
 * [Node.js 18+](https://nodejs.org/)
 * **(For Azure Only):** [ODBC Driver 18 for SQL Server](https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server)
+* **(Optional):** [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) for cloud deployment.
 
 ### 2. Backend Setup (Python)
 
@@ -87,6 +89,29 @@ ACCESS_TOKEN_EXPIRE_MINUTES=4320
 
 ---
 
+## 🏗️ Database Migrations (Alembic)
+
+This project uses Alembic to manage database tables. You must run migrations to create the tables before starting the app.
+
+**1. Initialize/Update Database**
+Run this command whenever you pull new code or change `models.py`:
+
+```bash
+cd ledger_api
+# Activate venv first!
+alembic upgrade head
+```
+
+**2. Creating a New Migration (For Developers)**
+If you modify `models.py` (e.g., add a column), run:
+
+```bash
+alembic revision --autogenerate -m "Description of change"
+alembic upgrade head
+```
+
+---
+
 ## ▶️ Running the App (Development)
 
 Run these in two separate terminals.
@@ -97,6 +122,7 @@ Run these in two separate terminals.
 ```powershell
 cd ledger_api
 .env\Scripts\activate
+alembic upgrade head   # <--- Run migrations first!
 uvicorn main:app --reload --port 8000
 ```
 
@@ -104,6 +130,7 @@ uvicorn main:app --reload --port 8000
 ```bash
 cd ledger_api
 source venv/bin/activate
+alembic upgrade head   # <--- Run migrations first!
 uvicorn main:app --reload --port 8000
 ```
 
@@ -150,10 +177,14 @@ This bundles the React frontend so it can be served directly by Python.
 * **Cause:** Azure Firewall is blocking your IP.
 * **Fix:** Go to Azure Portal -> SQL Server -> Networking -> "Add client IPv4 address".
 
-**2. "Driver not found" (Azure)**
+**2. "Table already exists" (Alembic)**
+* **Cause:** You switched to Alembic on an existing database.
+* **Fix:** Run `alembic stamp head` to mark the database as up-to-date without running SQL.
+
+**3. "Driver not found" (Azure)**
 * **Cause:** Missing ODBC Driver.
 * **Fix:** Download "ODBC Driver 18 for SQL Server" from Microsoft.
 
-**3. App loads but data is missing on Phone**
+**4. App loads but data is missing on Phone**
 * **Cause:** Frontend built with `localhost` URLs.
 * **Fix:** Ensure `App.jsx` uses relative URLs (e.g., `/token`) and rebuild (`npm run build`).
