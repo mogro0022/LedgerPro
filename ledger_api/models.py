@@ -5,7 +5,6 @@ from database import Base
 
 class Customer(Base):
     __tablename__ = "Customers"
-    __table_args__ = {"schema": "dbo"}
     # By default, SQLAlchemy assumes 'dbo' schema for SQL Server
 
     CustomerID = Column(Integer, primary_key=True, index=True)
@@ -20,12 +19,8 @@ class Customer(Base):
 
 class Transaction(Base):
     __tablename__ = "Transactions"
-    __table_args__ = {
-        "schema": "Ledger"
-    }  # <--- CRITICAL: Points to [Ledger].[Transactions]
-
     TransactionID = Column(Integer, primary_key=True, index=True)
-    CustomerID = Column(Integer, ForeignKey("dbo.Customers.CustomerID"))
+    CustomerID = Column(Integer, ForeignKey("Customers.CustomerID"))
     Amount = Column(DECIMAL(18, 2))
     EntryDate = Column(DateTime)  # datetime2 maps to DateTime in Python
     Notes = Column(String, nullable=True)
