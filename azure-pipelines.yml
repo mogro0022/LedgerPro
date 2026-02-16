@@ -23,7 +23,7 @@ stages:
        steps:
          - task: UsePythonVersion@0
            inputs:
-             versionSpec: '^3.14.0'
+             versionSpec: '3.14'
              addToPath: true
          - script: |
             cd ledger_api
