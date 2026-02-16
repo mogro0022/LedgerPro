@@ -6,12 +6,17 @@
 trigger:
  branches:
    include:
+     - main
      - dev
  paths:
     include:
      - ledger_api/*
      - ledger_ui/* 
-  
+
+pr:
+  - main
+  - dev
+
 pool:
   name: 'MyHomeLab'
 
