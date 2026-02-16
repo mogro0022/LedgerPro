@@ -13,7 +13,7 @@ trigger:
      - ledger_ui/* 
   
 pool:
-  vmImage: ubuntu-latest
+  name: 'MyHomeLab'
 
 stages:
   - stage: Build_Backend
