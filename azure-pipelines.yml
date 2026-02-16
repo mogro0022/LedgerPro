@@ -25,3 +25,21 @@ stages:
            inputs:
              versionSpec: '^3.14.0'
              addToPath: true
+         - script: |
+            cd ledger_api
+            python -m venv venv
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+           displayName: 'Install Dependencies'
+         - script: |
+            cd ledger_api
+            source venv/bin/activate
+            alembic upgrade head --sql > migration.sql
+           displayName: 'Generate SQL Migration Script'
+           continueOnError: true
+         - task: PublishBuildArtifacts@1
+           inputs:
+             PathtoPublish: 'ledger_api'
+             ArtifactName: 'ledger_api-artifact'
+             publishLocation: Container
