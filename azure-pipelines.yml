@@ -39,11 +39,9 @@ stages:
             alembic upgrade head --sql > migration.sql
            displayName: 'Generate SQL Migration Script'
            continueOnError: true
-         - task: PublishBuildArtifacts@1
-           inputs:
-             PathtoPublish: 'ledger_api'
-             ArtifactName: 'ledger_api-artifact'
-             publishLocation: Container
+         - publish: $(System.DefaultWorkingDirectory)/ledger_api
+           artifact: ledger_api-artifact
+
   - stage: BuildReact
     displayName: 'Build React Frontend'
     dependsOn: []
@@ -59,8 +57,5 @@ stages:
             npm ci
             npm run build
            displayName: 'npm install and build'
-         - task: PublishBuildArtifacts@1
-           inputs:
-             PathtoPublish: 'ledger_ui/dist'
-             ArtifactName: 'react-build'
-             publishLocation: 'Container'
+         - publish: $(System.DefaultWorkingDirectory)/ledger_ui/dist
+           artifact: WebAppContent
