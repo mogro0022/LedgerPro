@@ -39,3 +39,23 @@ stages:
              PathtoPublish: 'ledger_api'
              ArtifactName: 'ledger_api-artifact'
              publishLocation: Container
+  - stage: BuildReact
+    displayName: 'Build React Frontend'
+    dependsOn: []
+    jobs:
+     - job: React_Build
+       steps:
+         - task: NodeTool@0
+           inputs:
+            versionSpec: '18.x'
+           displayName: 'Install Node.js'
+         - script: |
+            cd ledger_ui
+            npm ci
+            npm run build
+           displayName: 'npm install and build'
+         - task: PublishBuildArtifacts@1
+           inputs:
+             PathtoPublish: 'ledger_ui/dist'
+             ArtifactName: 'react-build'
+             publishLocation: 'Container'
