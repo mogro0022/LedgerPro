@@ -38,6 +38,8 @@ stages:
             source venv/bin/activate
             alembic upgrade head --sql > migration.sql
            displayName: 'Generate SQL Migration Script'
+           env:
+             DATABASE_URL: $(DATABASE_URL)
            continueOnError: true
          - publish: $(System.DefaultWorkingDirectory)/ledger_api
            artifact: ledger_api-artifact
