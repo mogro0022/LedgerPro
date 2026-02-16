@@ -7,8 +7,8 @@ trigger:
  branches:
    include:
      - dev
-  paths:
-   include:
+ paths:
+    include:
      - ledger_api/*
      - ledger_ui/* 
   
