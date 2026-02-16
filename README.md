@@ -1,6 +1,6 @@
 # LedgerPro
 
-LedgerPro is a secure, responsive financial management application designed for small businesses. It features a modern React frontend and a high-performance FastAPI backend.
+LedgerPro is a secure, responsive financial management application designed for small businesses. It features a modern React frontend and a high-performance FastAPI backend. Testing is done through Cypress.
 **Key Feature:** This application supports **Dual Database Mode** (SQLite / Azure SQL) and uses **Alembic** for robust database version control.
 
 ## 🚀 Tech Stack
