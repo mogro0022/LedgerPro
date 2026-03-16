@@ -139,5 +139,5 @@ uvicorn main:app --reload
 
 ## 🛡️ Security Notes for Production
 1.  **Azure Firewall:** Ensure your client IP is allowed in the Azure Portal Networking settings.
-2.  **SSL/TLS:** The connection string includes `Encrypt=yes` to ensure data is encrypted in transit.
+2.  **SSL/TLS:** The connection string includes `Encrypt=yes` to ensure data is encrypted.
 3.  **Ledger Verification:** You can verify the integrity of the Azure Ledger tables using the "Database Ledger" blade in the Azure Portal.
