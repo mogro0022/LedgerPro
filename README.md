@@ -183,7 +183,7 @@ This bundles the React frontend so it can be served directly by Python.
 
 **3. "Driver not found" (Azure)**
 * **Cause:** Missing ODBC Driver.
-* **Fix:** Download "ODBC Driver 18 for SQL Server" from Microsoft.
+* **Fix:** Download the "ODBC Driver 18 for SQL Server" from Microsoft.
 
 **4. App loads but data is missing on Phone**
 * **Cause:** Frontend built with `localhost` URLs.
