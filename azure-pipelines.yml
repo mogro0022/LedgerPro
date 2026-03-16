@@ -38,12 +38,12 @@ stages:
             source venv/bin/activate
             alembic upgrade head --sql > migration.sql
            displayName: 'Generate SQL Migration Script'
+           env:
+             DATABASE_URL: $(DATABASE_URL)
            continueOnError: true
-         - task: PublishBuildArtifacts@1
-           inputs:
-             PathtoPublish: 'ledger_api'
-             ArtifactName: 'ledger_api-artifact'
-             publishLocation: Container
+         - publish: $(System.DefaultWorkingDirectory)/ledger_api
+           artifact: ledger_api-artifact
+
   - stage: BuildReact
     displayName: 'Build React Frontend'
     dependsOn: []
@@ -52,15 +52,12 @@ stages:
        steps:
          - task: NodeTool@0
            inputs:
-            versionSpec: '18.x'
+            versionSpec: '22.x'
            displayName: 'Install Node.js'
          - script: |
             cd ledger_ui
             npm ci
             npm run build
            displayName: 'npm install and build'
-         - task: PublishBuildArtifacts@1
-           inputs:
-             PathtoPublish: 'ledger_ui/dist'
-             ArtifactName: 'react-build'
-             publishLocation: 'Container'
+         - publish: $(System.DefaultWorkingDirectory)/ledger_ui/dist
+           artifact: WebAppContent
